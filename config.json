@@ -1,11 +1,7 @@
+
+
 {
 	"token": "NTU1NzUzOTc3NDcyMzUyMjk2.D27B0w.3e7IV4Do9LWAAVEfvoZmNChohoIE",
-	"servers": [
-		"548903773897097228",
-		"ID 2ND SERVER"548903773897097228
-	],
-	"roleName": "THE ROLE NAME YOU WANT TO CHANGE ITS COLOR FROM HERE",
-	"colors": 12,
-	"speed": 60000,
-	"logging": true
+	"initcmd": "!",
+	"id": "248361311593955329"
 }
