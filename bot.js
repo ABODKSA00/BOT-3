@@ -1,50 +1,63 @@
+
+ const yourID = "248361311593955329"; 
+const setupCMD = "-reacon"//الرساله لتشغيل امر الرياكشن
+let initialMessage = `**React to the messages below to receive the associated role. If you would like to remove the role, simply remove your reaction!**`;
+const roles = ["Fortnite", "Pubg", "Brawlhalla","Apex-Legend", "Cs:Go", "Paladins","LOL", "COD", "BattleField", "Rinbow 6","Overwatch"];//الرتب الي يعطيها البوت يمديك تعدل
+const reactions = [":Fortnite: ", ":Pubg:", ":Brawhalla:", ":apex:", ":csgo:", ":paladins:", ":lol:" , ":cod:", ":battlefield:", ":rin6:", "overwatch" ];//الايموجي الي يعطي رياكشن بس كل رتبه لها رياكسن بالترتيب 
+const botToken = "NTU1NzUzOTc3NDcyMzUyMjk2.D27B0w.3e7IV4Do9LWAAVEfvoZmNChohoIE"; //حط توكن بوتك
 const Discord = require('discord.js');
-const client = new Discord.Client();
-const config = require('./config.json');
+const bot = new Discord.Client();
+bot.login(botToken);
 
-const size    = config.colors;
-const rainbow = new Array(size);
-
-for (var i=0; i<size; i++) {
-  var red   = sin_to_hex(i, 0 * Math.PI * 2/3); // 0   deg
-  var blue  = sin_to_hex(i, 1 * Math.PI * 2/3); // 120 deg
-  var green = sin_to_hex(i, 2 * Math.PI * 2/3); // 240 deg
-
-  rainbow[i] = '#'+ red + green + blue;
+if (roles.length !== reactions.length) throw "__**Gaming Roles**__";
+//لالالالالا نغير شي ابداا
+function generateMessages(){
+    var messages = [];
+    messages.push(initialMessage);
+    for (let role of roles) messages.push(`*React below to get the*, **"${role}"** ,*role!*`); //DONT CHANGE THIS
+    return messages;
 }
 
-function sin_to_hex(i, phase) {
-  var sin = Math.sin(Math.PI / size * 2 * i + phase);
-  var int = Math.floor(sin * 127) + 128;
-  var hex = int.toString(16);
 
-  return hex.length === 1 ? '0'+hex : hex;
-}
-
-let place = 0;
-const servers = config.servers;
-
-function changeColor() {
-  for (let index = 0; index < servers.length; ++index) {		
-    client.guilds.get(servers[index]).roles.find('name', config.roleName).setColor(rainbow[place])
-		.catch(console.error);
-		
-    if(config.logging){
-      console.log(`[ColorChanger] Changed color to ${rainbow[place]} in server: ${servers[index]}`);
+bot.on("message", message => {
+    if (message.author.id == yourID && message.content.toLowerCase() == setupCMD){
+        var toSend = generateMessages();
+        let mappedArray = [[toSend[0], false], ...toSend.slice(1).map( (message, idx) => [message, reactions[idx]])];
+        for (let mapObj of mappedArray){
+            message.channel.send(mapObj[0]).then( sent => {
+                if (mapObj[1]){
+                  sent.react(mapObj[1]);  
+                } 
+            });
+        }
     }
-    if(place == (size - 1)){
-      place = 0;
-    }else{
-      place++;
-    }
-  }
-}
+})
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.username}!`);
-  if(config.speed < 60000){console.log("The minimum speed is 60.000, if this gets abused your bot might get IP-banned"); process.exit(1);}
-  setInterval(changeColor, config.speed);
+
+bot.on('raw', event => {
+    if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE"){
+        
+        let channel = bot.channels.get(event.d.channel_id);
+        let message = channel.fetchMessage(event.d.message_id).then(msg=> {
+        let user = msg.guild.members.get(event.d.user_id);
+        
+        if (msg.author.id == bot.user.id && msg.content != initialMessage){
+       
+            var re = `\\*\\*"(.+)?(?="\\*\\*)`;
+            var role = msg.content.match(re)[1];
+        
+            if (user.id != bot.user.id){
+                var roleObj = msg.guild.roles.find(r => r.name === role);
+                var memberObj = msg.guild.members.get(user.id);
+                
+                if (event.t === "MESSAGE_REACTION_ADD"){
+                    memberObj.addRole(roleObj)
+                } else {
+                    memberObj.removeRole(roleObj);
+                }
+            }
+        }
+        })
+ 
+    }   
 });
-
-
-client.login(config.token);
