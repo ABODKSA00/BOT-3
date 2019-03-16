@@ -1,6 +1,6 @@
 
  const yourID = "248361311593955329"; 
-const setupCMD = "-reacon"//الرساله لتشغيل امر الرياكشن
+const setupCMD = "-al7lo"//الرساله لتشغيل امر الرياكشن
 let initialMessage = `**React to the messages below to receive the associated role. If you would like to remove the role, simply remove your reaction!**`;
 const roles = ["Fortnite", "Pubg", "Brawlhalla","Apex-Legend", "Cs:Go", "Paladins","LOL", "COD", "BattleField", "Rinbow 6","Overwatch"];//الرتب الي يعطيها البوت يمديك تعدل
 const reactions = [":Fortnite: ", ":Pubg:", ":Brawhalla:", ":apex:", ":csgo:", ":paladins:", ":lol:" , ":cod:", ":battlefield:", ":rin6:", "overwatch" ];//الايموجي الي يعطي رياكشن بس كل رتبه لها رياكسن بالترتيب 
