@@ -5,6 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "module-name":"^0.0.1-security",
+    "ascii-data-table":"^2.1.1",
     "dateformat":"^3.0.3",
     "dataformat":"^1.0.0",
     "moment":"^2.24.0",
