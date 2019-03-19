@@ -4,6 +4,7 @@
   "description": "Discord.js bot on Heroku",
   "main": "bot.js",
   "dependencies": {
+    "moment":"^2.24.0"
     "hh-mm-ss": "^1.2.0",
     "common-tags": "^1.8.0",
     "discord.js": "^11.4.2",
