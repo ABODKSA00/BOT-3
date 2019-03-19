@@ -5,7 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "dateformat":"^3.0.3",
-    
+    "dataformat":"^1.0.0",
     "moment":"^2.24.0",
     "hh-mm-ss": "^1.2.0",
     "common-tags": "^1.8.0",
